@@ -9,6 +9,8 @@ import cadastrar_black from "../../img/cadastrar_black.png";
 import lista_black from "../../img/lista_black.png";
 import configuracao_black from "../../img/configuracao_black.png";
 import { useNavigate } from 'react-router-dom';
+
+import icon_copy from "../../img/Copy.png";
 import axios from 'axios';
 
 export default function Configuracao() {
@@ -64,6 +66,17 @@ export default function Configuracao() {
     }
   }
 
+     const link = "https://aleximportscatalogo.vercel.app/";
+
+   const copiarLink = () => {
+      navigator.clipboard.writeText(link)
+         .then(() => {
+            alert("Link copiado com sucesso!");
+         })
+         .catch(() => {
+            alert("Erro ao copiar o link.");
+         });
+   };
 
   return (
     <div className="catalogo">
@@ -107,7 +120,7 @@ export default function Configuracao() {
       <main>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
           <div className='text-top'>
-            <button onClick={() => navigate("/Integracao")}>
+            <button>
               <p>CONFIGURAÇÃO</p>
             </button>
           </div>
@@ -117,6 +130,12 @@ export default function Configuracao() {
           <p>nome da loja</p>
           <p>nome do instagram</p>
           <p>numero do whatsapp/telefone</p>
+
+          <div className="campo_link" style={{ cursor: 'pointer',marginTop:30 }} onClick={copiarLink}>
+            <p>Link do catálogo</p>
+            <img src={icon_copy} alt="icon de copiar" />
+          </div>
+
           <form onSubmit={handleSubmit}>
             <section>
               <div className="campo">
@@ -152,7 +171,7 @@ export default function Configuracao() {
                 </div>
               </div>
 
-              <div className='btn-cadastrar'>
+              <div className='btn-cadastrar' style={{marginBottom:100}}>
                 <button type="submit">SALVAR</button>
               </div>
             </section>
