@@ -77,7 +77,7 @@ export default function Cadastrar_produto() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3333/produto', formData);
+      await axios.post('https://api-catalogo-7z6l.onrender.com/produto', formData);
       alert('Produto criado com sucesso!');
     } catch (error) {
       console.error('Erro ao criar produto:', error);

@@ -53,7 +53,7 @@ export default function Lista_produtos() {
 
   async function loadProdutos() {
     try {
-      const response = await api.get('/produtos');
+      const response = await api.get('https://api-catalogo-7z6l.onrender.com/produtos');
       setProdutos(response.data);
     } catch (error) {
       console.error('Erro ao carregar produtos:', error);
@@ -63,7 +63,7 @@ export default function Lista_produtos() {
 
   async function handleCancelar(id: string) {
     try {
-      await api.delete(`/produtodelete/${id}`);
+      await api.delete(`https://api-catalogo-7z6l.onrender.com/produtodelete/${id}`);
       loadProdutos();
     } catch (error) {
       console.error('Erro ao apagar produto:', error);
