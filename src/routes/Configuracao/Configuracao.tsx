@@ -57,8 +57,8 @@ export default function Configuracao() {
 
   async function loadConfiguracao() {
     try {
-      //const response = await axios.get('https://api-catalogo-7z6l.onrender.com/configuracaos');
-      const response = await axios.get('http://localhost:3333/configuracaos');
+      const response = await axios.get('https://api-catalogo-7z6l.onrender.com/configuracaos');
+      //const response = await axios.get('http://localhost:3333/configuracaos');
       setConfiguracao(response.data);
     } catch (error) {
       console.error('Erro ao carregar produtos:', error);
@@ -74,8 +74,8 @@ export default function Configuracao() {
     e.preventDefault();
     setLoading(true);
     try {
-      //await axios.put('https://api-catalogo-7z6l.onrender.com/configuracao', {
-      await axios.put('http://localhost:3333/configuracao', {
+      await axios.put('https://api-catalogo-7z6l.onrender.com/configuracao', {
+      //await axios.put('http://localhost:3333/configuracao', {
         name_loja: formData.name_loja,
         whatsapp_num: formData.whatsapp_num,
         instagram_name: formData.instagram_name,

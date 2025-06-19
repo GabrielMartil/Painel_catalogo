@@ -74,7 +74,7 @@ export default function Cadastrar_produto() {
         return;
       }
 
-      await axios.post('http://localhost:3333/produto', formData);
+      await axios.post('https://api-catalogo-7z6l.onrender.com/produto', formData);
       alert('Produto criado com sucesso!');
     } catch (error) {
       console.error('Erro ao criar produto:', error);
