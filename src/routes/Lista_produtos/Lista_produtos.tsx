@@ -3,6 +3,7 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import './Lista_produtos.css';
 
 import Logo from '../../img/logoaleximports.png'
+import produto_sem_foto from '../../img/sem-foto.png';
 
 import cadastrar_black from "../../img/cadastrar_black.png";
 import lista_black from "../../img/lista_black.png";
@@ -53,7 +54,9 @@ export default function Lista_produtos() {
 
   async function loadProdutos() {
     try {
-      const response = await api.get('https://api-catalogo-7z6l.onrender.com/produtos');
+
+      //const response = await api.get('https://api-catalogo-7z6l.onrender.com/produtos');
+      const response = await api.get('http://localhost:3333/produtos');
       setProdutos(response.data);
     } catch (error) {
       console.error('Erro ao carregar produtos:', error);
@@ -63,7 +66,8 @@ export default function Lista_produtos() {
 
   async function handleCancelar(id: string) {
     try {
-      await api.delete(`https://api-catalogo-7z6l.onrender.com/produtodelete/${id}`);
+      //await api.delete(`https://api-catalogo-7z6l.onrender.com/produtodelete/${id}`);
+      await api.delete(`http://localhost:3333/produtodelete/${id}`);
       loadProdutos();
     } catch (error) {
       console.error('Erro ao apagar produto:', error);
@@ -110,64 +114,68 @@ export default function Lista_produtos() {
       </div>
 
       <main>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop:50, fontFamily: "lora" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: 50, fontFamily: "lora" }}>
           <h2>Lista de produtos</h2>
         </div>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", marginBottom: 100 }}>
           {produtos.length === 0 ? (
             <p style={{ color: '#eb0000' }}>Nenhum produto cadastrado ainda.</p>
           ) : (
-            produtos.map((produto) => (
-              <div key={produto.id} className='list-div'>
-                <div className='list-div-2'>
-                  {produto.image ? (
+            produtos.map((produto) => {
+              const isImagemValida = produto.image && produto.image.length > "data:image/jpeg;base64,".length;
+
+              return (
+                <div key={produto.id} className='list-div'>
+                  <div className='list-div-2'>
                     <img
                       src={
-                        produto.image.startsWith("data:image")
-                          ? produto.image
-                          : `data:image/jpeg;base64,${produto.image}`
+                        isImagemValida
+                          ? (produto.image.startsWith("data:image")
+                            ? produto.image
+                            : `data:image/jpeg;base64,${produto.image}`)
+                          : produto_sem_foto
                       }
                       alt={produto.name}
+                      className="produto-imagem"
+                      style={{ maxWidth: 140 }}
                     />
-                  ) : (
-                    <div>
-                      <p>Imagem não disponível</p>
-                    </div>
-                  )}
-                  <div className='list-infor'>
-                    <div>
-                      <p><strong>Nome do Produto: </strong>{produto.name} </p>
-                    </div>
-                    <div>
-                      <p><strong>Categoria: </strong>{produto.categoria} </p>
-                    </div>
-                    <div>
-                      <p><strong>Condição: </strong>{produto.condicao} </p>
-                    </div>
-                    <div>
-                      <p><strong>Memoria: </strong>{produto.memoria}GB </p>
-                    </div>
-                    <div>
-                      <p><strong>Valor: </strong>R$ {produto.valor}</p>
+
+                    <div className='list-infor'>
+                      <div>
+                        <p><strong>Nome do Produto: </strong>{produto.name}</p>
+                      </div>
+                      <div>
+                        <p><strong>Categoria: </strong>{produto.categoria}</p>
+                      </div>
+                      <div>
+                        <p><strong>Condição: </strong>{produto.condicao}</p>
+                      </div>
+                      <div>
+                        <p><strong>Memória: </strong>{produto.memoria}GB</p>
+                      </div>
+                      <div>
+                        <p><strong>Valor: </strong>R$ {produto.valor}</p>
+                      </div>
                     </div>
                   </div>
+
+                  <div style={{ marginTop: '10px', display: 'flex', gap: '10px', flexDirection: 'column' }}>
+                    <button
+                      onClick={() => navigate(`/Editar_produto/${produto.id}`)}
+                      className='btn-list-edit'
+                    >
+                      <FaEdit size={18} />
+                    </button>
+                    <button
+                      onClick={() => handleCancelar(produto.id)}
+                      className='btn-list-trash'
+                    >
+                      <FaTrash size={18} />
+                    </button>
+                  </div>
                 </div>
-                <div style={{ marginTop: '10px', display: 'flex', gap: '10px', flexDirection: 'column' }}>
-                  <button
-                    onClick={() => navigate(`/Editar_produto/${produto.id}`)}
-                    className='btn-list-edit'
-                  >
-                    <FaEdit size={18} />
-                  </button>
-                  <button
-                    onClick={() => handleCancelar(produto.id)}
-                    className='btn-list-trash'
-                  >
-                    <FaTrash size={18} />
-                  </button>
-                </div>
-              </div>
-            ))
+              );
+            })
           )}
         </div>
       </main>

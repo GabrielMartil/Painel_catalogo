@@ -9,19 +9,9 @@ import cadastrar_black from "../../img/cadastrar_black.png";
 import lista_black from "../../img/lista_black.png";
 import configuracao_black from "../../img/configuracao_black.png";
 
-/*interface ProdutosProps {
-  id: string,
-  image: string,
-  name: string,
-  valor: string,
-  memoria: string,
-  bateria: string,
-  categoria: string,
-  condicao: string,
-  descricao: string
-};*/
-
 export default function Cadastrar_produto() {
+
+  const [submitted, setSubmitted] = useState(false);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const divRef = useRef<HTMLDivElement>(null);
@@ -56,7 +46,7 @@ export default function Cadastrar_produto() {
     };
   }, []);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   }
@@ -76,8 +66,15 @@ export default function Cadastrar_produto() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setSubmitted(true);
+    const { name, valor, memoria } = formData;
     try {
-      await axios.post('https://api-catalogo-7z6l.onrender.com/produto', formData);
+      if (!name || !valor || !memoria) {
+        alert("Preencha os campos Nome, Valor e Memória");
+        return;
+      }
+
+      await axios.post('http://localhost:3333/produto', formData);
       alert('Produto criado com sucesso!');
     } catch (error) {
       console.error('Erro ao criar produto:', error);
@@ -147,34 +144,65 @@ export default function Cadastrar_produto() {
               </div>
             </div>
             <div className="campo">
-              <label>Produto:</label>
-              <input type="text" name="name" placeholder="Nome do Produto" onChange={handleChange} />
+              <label>
+                Produto:
+                {!formData.name && <span style={{ color: 'red' }}> *</span>}
+              </label>
+              <input type="text" name="name" placeholder="Nome do Produto"
+                onChange={handleChange}
+                style={{
+                  borderColor: submitted && !formData.name ? 'red' : undefined,
+                }}
+              />
             </div>
             <div className="campo">
-              <label>Valor:</label>
-              <input type="text" name="valor" placeholder="Valor" onChange={handleChange} />
+              <label>
+                Valor:
+                {!formData.valor && <span style={{ color: 'red' }}> *</span>}
+              </label>
+              <input
+                type="text"
+                name="valor"
+                placeholder="Valor"
+                onChange={handleChange}
+                style={{
+                  borderColor: submitted && !formData.valor ? 'red' : undefined,
+                }}
+              />
             </div>
-            <div className="campo">
-              <label>Memória:</label>
-              <input type="text" name="memoria" placeholder="Memória" onChange={handleChange} />
+            <div className="campo" style={{ display: "flex" }}>
+              <label>
+                Memória:
+                {!formData.memoria && <span style={{ color: 'red' }}> *</span>}
+              </label>
+              <input
+                type="text"
+                name="memoria"
+                placeholder="Memória"
+                onChange={handleChange}
+                value={formData.memoria || ''}
+                style={{
+                  borderColor: submitted && !formData.memoria ? 'red' : undefined,
+                }}
+              />
             </div>
-                <div className="campo2" style={{ marginTop: 20, alignItems: "center" }}>
-                  <label><strong>Condição:</strong></label>
-                  <div style={{ display: 'flex', margin: 10, gap:10 }}>
-                    {['Novos', 'Seminovos'].map((opcao) => (
-                      <label key={opcao}>
-                        <input
-                          type="radio"
-                          name="condicao"
-                          value={opcao}
-                          checked={formData.condicao === opcao}
-                          onChange={handleChange}
-                        />
-                        <span style={{ fontWeight: 'bold' }}>{opcao}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
+            <div className="campo2" style={{ marginTop: 20, alignItems: "center" }}>
+              <label><strong>Condição:</strong></label>
+              <div style={{ display: 'flex', margin: 10, gap: 10 }}>
+                {['Novos', 'Seminovos'].map((opcao) => (
+                  <label key={opcao}>
+                    <input
+                      type="radio"
+                      name="condicao"
+                      value={opcao}
+                      checked={formData.condicao === opcao}
+                      onChange={handleChange}
+                    />
+                    <span style={{ fontWeight: 'bold' }}>{opcao}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
             <div className="campo">
               <label>
                 Bateria:
@@ -194,11 +222,17 @@ export default function Cadastrar_produto() {
               />
             </div>
             <div className="campo">
-              <label>Categoria:</label>
-              <input type="text" name="categoria" placeholder="Categoria" onChange={handleChange} />
+              <label style={{ marginBottom: 2 }}>Categoria:</label>
+              <select name="categoria" onChange={handleChange}>
+                <option value="">Selecione uma categoria</option>
+                <option value="Iphone">Iphone</option>
+                <option value="IPad">IPad</option>
+                <option value="Macbook">Macbook</option>
+                <option value="applewatch">Apple Watch</option>
+              </select>
             </div>
             <div className="campo">
-              <label>Descrição:</label>
+              <label style={{ marginBottom: 2 }}>Descrição:</label>
               <input type="text" name="descricao" placeholder="Descrição" onChange={handleChange} />
             </div>
             <div className='btn-cadastrar'>
