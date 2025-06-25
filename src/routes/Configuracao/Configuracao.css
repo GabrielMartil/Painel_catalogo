@@ -285,7 +285,7 @@ section {
   color: #000;
 }
 
-.campo {
+.campo_config {
   display: flex;
   flex-direction: column;
   font-weight: bold;
@@ -293,8 +293,8 @@ section {
   margin-top: 10px;
 }
 
-.campo input,
-.campo select {
+.campo_config input,
+.campo_config select {
   padding: 8px;
   border: 2px solid rgb(94, 94, 94);
   border-radius: 6px;

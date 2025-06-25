@@ -158,7 +158,7 @@ export default function Configuracao() {
 
           <form onSubmit={handleSubmit}>
             <section>
-              <div className="campo">
+              <div className="campo_config">
                 <label>Nome da Loja:</label>
                 <input
                   type="text"
@@ -168,7 +168,7 @@ export default function Configuracao() {
                   value={formData.name_loja}
                 />
               </div>
-              <div className="campo">
+              <div className="campo_config">
                 <label>Whatsapp:</label>
                 <input
                   type="text"
@@ -178,7 +178,7 @@ export default function Configuracao() {
                   value={formData.whatsapp_num}
                 />
               </div>
-              <div className="campo">
+              <div className="campo_config">
                 <label>Instagram:</label>
                 <input
                   type="text"
