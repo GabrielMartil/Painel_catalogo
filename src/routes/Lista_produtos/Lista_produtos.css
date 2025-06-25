@@ -163,3 +163,19 @@ color: #ffffff;
   margin:0;
   filter: brightness(0) invert(1);
 }
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  font-size: 15px;
+  margin-top: 10px;
+  width: 20%;
+}
+
+.campo input {
+  padding: 8px;
+  border: 2px solid rgb(94, 94, 94);
+  border-radius: 6px;
+  width: 100%;
+}

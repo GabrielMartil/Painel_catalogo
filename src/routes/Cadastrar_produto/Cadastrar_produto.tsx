@@ -73,8 +73,8 @@ export default function Cadastrar_produto() {
         alert("Preencha os campos Nome, Valor e Memória");
         return;
       }
-
       await axios.post('https://api-catalogo-7z6l.onrender.com/produto', formData);
+      //await axios.post('http://localhost:3333/produto', formData);
       alert('Produto criado com sucesso!');
     } catch (error) {
       console.error('Erro ao criar produto:', error);
@@ -143,7 +143,7 @@ export default function Cadastrar_produto() {
                 />
               </div>
             </div>
-            <div className="campo">
+            <div className="campo_cadastrar">
               <label>
                 Produto:
                 {!formData.name && <span style={{ color: 'red' }}> *</span>}
@@ -155,7 +155,7 @@ export default function Cadastrar_produto() {
                 }}
               />
             </div>
-            <div className="campo">
+            <div className="campo_cadastrar">
               <label>
                 Valor:
                 {!formData.valor && <span style={{ color: 'red' }}> *</span>}
@@ -170,7 +170,7 @@ export default function Cadastrar_produto() {
                 }}
               />
             </div>
-            <div className="campo" style={{ display: "flex" }}>
+            <div className="campo_cadastrar" style={{ display: "flex" }}>
               <label>
                 Memória:
                 {!formData.memoria && <span style={{ color: 'red' }}> *</span>}
@@ -186,7 +186,7 @@ export default function Cadastrar_produto() {
                 }}
               />
             </div>
-            <div className="campo2" style={{ marginTop: 20, alignItems: "center" }}>
+            <div className="campo_cadastrar2" style={{ marginTop: 20, alignItems: "center" }}>
               <label><strong>Condição:</strong></label>
               <div style={{ display: 'flex', margin: 10, gap: 10 }}>
                 {['Novos', 'Seminovos'].map((opcao) => (
@@ -203,7 +203,7 @@ export default function Cadastrar_produto() {
                 ))}
               </div>
             </div>
-            <div className="campo">
+            <div className="campo_cadastrar">
               <label>
                 Bateria:
                 {formData.condicao === "Seminovos" && <span style={{ color: 'red' }}> *</span>}
@@ -221,9 +221,9 @@ export default function Cadastrar_produto() {
                 }}
               />
             </div>
-            <div className="campo">
+            <div className="campo_cadastrar">
               <label style={{ marginBottom: 2 }}>Categoria:</label>
-              <select name="categoria" onChange={handleChange}>
+              <select name="categoria" onChange={handleChange} className="select-custom">
                 <option value="">Selecione uma categoria</option>
                 <option value="Iphone">Iphone</option>
                 <option value="IPad">IPad</option>
@@ -231,7 +231,7 @@ export default function Cadastrar_produto() {
                 <option value="applewatch">Apple Watch</option>
               </select>
             </div>
-            <div className="campo">
+            <div className="campo_cadastrar">
               <label style={{ marginBottom: 2 }}>Descrição:</label>
               <input type="text" name="descricao" placeholder="Descrição" onChange={handleChange} />
             </div>

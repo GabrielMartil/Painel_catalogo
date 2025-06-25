@@ -285,7 +285,19 @@ section {
   color: #000;
 }
 
-.campo {
+.select-custom {
+  padding: 8px;
+  border: 2px solid #888;
+  border-radius: 6px;
+  background-color: white;
+  font-size: 15px;
+  min-width: 150px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.campo_cadastrar {
   display: flex;
   flex-direction: column;
   font-weight: bold;
@@ -293,15 +305,15 @@ section {
   margin-top: 10px;
 }
 
-.campo input,
-.campo select {
+.campo_cadastrar input,
+.campo_cadastrar select {
   padding: 8px;
-  border: 2px solid black;
+  border: 2px solid rgb(94, 94, 94);
   border-radius: 6px;
   min-width: 150px;
 }
 
-.campo2 {
+.campo_cadastrar2 {
   display: flex;
   flex-direction: column;
   font-weight: bold;
@@ -309,9 +321,9 @@ section {
   margin-top: 10px;
 }
 
-.campo2 input,
-.campo2 select {
-  border: 2px solid black;
+.campo_cadastrar2 input,
+.campo_cadastrar2 select {
+  border: 2px solid rgb(94, 94, 94);
   border-radius: 6px;
 }
 

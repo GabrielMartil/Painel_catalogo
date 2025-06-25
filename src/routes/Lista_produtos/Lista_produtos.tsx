@@ -28,13 +28,14 @@ export default function Lista_produtos() {
   const navigate = useNavigate()
   const divRef = useRef<HTMLDivElement>(null);
   const [paragraphCount, setParagraphCount] = useState(0);
+  const [filter, setFilter] = useState("");
   const [produtos, setProdutos] = useState<ProdutosProps[]>([]);
 
   useEffect(() => {
     const updateParagraphCount = () => {
       if (divRef.current) {
         const divWidth = divRef.current.offsetWidth;
-        const paragraphWidth = 100; // Largura aproximada de cada <p>
+        const paragraphWidth = 100;
         setParagraphCount(Math.ceil(divWidth / paragraphWidth));
       }
     };
@@ -54,10 +55,13 @@ export default function Lista_produtos() {
 
   async function loadProdutos() {
     try {
-
       const response = await api.get('https://api-catalogo-7z6l.onrender.com/produtos');
       //const response = await api.get('http://localhost:3333/produtos');
-      setProdutos(response.data);
+      const produtosOrdenados = response.data.sort((a: { categoria: string; }, b: { categoria: any; }) =>
+        a.categoria.localeCompare(b.categoria)
+      );
+
+      setProdutos(produtosOrdenados);
     } catch (error) {
       console.error('Erro ao carregar produtos:', error);
     }
@@ -73,6 +77,10 @@ export default function Lista_produtos() {
       console.error('Erro ao apagar produto:', error);
     }
   }
+
+  const produtosFiltrados = produtos.filter((produto) =>
+    produto.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <div className="catalogo">
@@ -118,10 +126,19 @@ export default function Lista_produtos() {
           <h2>Lista de produtos</h2>
         </div>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", marginBottom: 100 }}>
-          {produtos.length === 0 ? (
+          <div className="campo">
+            <input
+              type="text"
+              placeholder="Buscar produto..."
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              
+            />
+          </div>
+          {produtosFiltrados.length === 0 ? (
             <p style={{ color: '#eb0000' }}>Nenhum produto cadastrado ainda.</p>
           ) : (
-            produtos.map((produto) => {
+            produtosFiltrados.map((produto) => {
               const isImagemValida = produto.image && produto.image.length > "data:image/jpeg;base64,".length;
 
               return (
